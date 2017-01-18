@@ -32,8 +32,13 @@ trait RestDriven extends Suite with BeforeAndAfterAll with BeforeAndAfterEach {
     driver.addExpectation(request, response)
   }
 
-  def request(method: Method, path: String): ClientDriverRequest =
-    RestClientDriver.onRequestTo(path).withMethod(method)
+  def request(method: Method, path: String, body: Option[HttpEntity] = None): ClientDriverRequest = {
+    val builder = RestClientDriver.onRequestTo(path).withMethod(method)
+    body match {
+      case Some(HttpEntity(b, c)) => builder.withBody(b, c); builder
+      case _ => builder
+    }
+  }
 
   def respondWith(status: Int, body: Option[HttpEntity] = None) = {
     body match {
@@ -44,10 +49,10 @@ trait RestDriven extends Suite with BeforeAndAfterAll with BeforeAndAfterEach {
 
   def entity(content: String, contentType: String) = Some(HttpEntity(content, contentType))
 
-  def onGetTo(path: String) = request(Method.GET, path)
-  def onPutTo(path: String) = request(Method.PUT, path)
-  def onPostTo(path: String) = request(Method.POST, path)
-  def onDeleteTo(path: String) = request(Method.DELETE, path)
-  def onRequestTo(method: String, path: String) =
-    request(Method.custom(method), path)
+  def onGetTo(path: String, body: Option[HttpEntity] = None) = request(Method.GET, path, body)
+  def onPutTo(path: String, body: Option[HttpEntity] = None) = request(Method.PUT, path, body)
+  def onPostTo(path: String, body: Option[HttpEntity] = None) = request(Method.POST, path, body)
+  def onDeleteTo(path: String, body: Option[HttpEntity] = None) = request(Method.DELETE, path, body)
+  def onRequestTo(method: String, path: String, body: Option[HttpEntity] = None) =
+    request(Method.custom(method), path, body)
 }

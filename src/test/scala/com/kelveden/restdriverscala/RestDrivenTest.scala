@@ -17,10 +17,32 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
       response.getStatusCode should equal(666)
     }
 
+    it("can build a GET request with body") {
+      expect(
+        onGetTo("/my/url", entity("mycontent", "text/plain")),
+        respondWith(666)
+      )
+
+      val response = get(s"$baseUrl/my/url", body("mycontent", "text/plain"))
+
+      response.getStatusCode should equal(666)
+    }
+
     it("can build a PUT request") {
       expect(onPutTo("/my/url"), respondWith(666))
 
       val response = put(s"$baseUrl/my/url")
+
+      response.getStatusCode should equal(666)
+    }
+
+    it("can build a PUT request with body") {
+      expect(
+        onPutTo("/my/url", entity("mycontent", "text/plain")),
+        respondWith(666)
+      )
+
+      val response = put(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
       response.getStatusCode should equal(666)
     }
@@ -33,6 +55,17 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
       response.getStatusCode should equal(666)
     }
 
+    it("can build a POST request with body") {
+      expect(
+        onPostTo("/my/url", entity("mycontent", "text/plain")),
+        respondWith(666)
+      )
+
+      val response = post(s"$baseUrl/my/url", body("mycontent", "text/plain"))
+
+      response.getStatusCode should equal(666)
+    }
+
     it("can build a DELETE request") {
       expect(onDeleteTo("/my/url"), respondWith(666))
 
@@ -41,10 +74,32 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
       response.getStatusCode should equal(666)
     }
 
+    it("can build a DELETE request with body") {
+      expect(
+        onDeleteTo("/my/url", entity("mycontent", "text/plain")),
+        respondWith(666)
+      )
+
+      val response = delete(s"$baseUrl/my/url", body("mycontent", "text/plain"))
+
+      response.getStatusCode should equal(666)
+    }
+
     it("can build a request with ad-hoc method") {
       expect(onRequestTo("OPTIONS", "/my/url"), respondWith(666))
 
       val response = options(s"$baseUrl/my/url")
+
+      response.getStatusCode should equal(666)
+    }
+
+    it("can build an ad-hoc request with body") {
+      expect(
+        onRequestTo("PUT", "/my/url", entity("mycontent", "text/plain")),
+        respondWith(666)
+      )
+
+      val response = put(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
       response.getStatusCode should equal(666)
     }

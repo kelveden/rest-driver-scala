@@ -1,20 +1,10 @@
 package com.kelveden.restdriverscala
 
-import java.net.ServerSocket
-
 import org.scalatest.{FunSpec, Matchers}
 import com.github.restdriver.serverdriver.RestServerDriver._
+import PortFinder._
 
 class RestDrivenTest extends FunSpec with Matchers with RestDriven {
-  def getFreePort = {
-    val socket = new ServerSocket(0) {
-      setReuseAddress(true)
-    }
-    val port = socket.getLocalPort
-    socket.close
-    port
-  }
-
   override val restDriverPort = getFreePort
   val baseUrl = s"http://localhost:$restDriverPort"
 

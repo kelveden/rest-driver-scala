@@ -1,15 +1,15 @@
 package com.kelveden.restdriverscala
 
 import com.github.restdriver.clientdriver.ClientDriverRequest.Method
-import com.github.restdriver.clientdriver.RestClientDriver._
+import com.github.restdriver.clientdriver.RestClientDriver
 import com.github.restdriver.clientdriver.{ClientDriverFactory, ClientDriverRequest, ClientDriverResponse, _}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Suite}
 
 trait RestDriven extends Suite with BeforeAndAfterAll with BeforeAndAfterEach {
-  implicit val restDriverPort: Int = 0
+  val restDriverPort: Int
 
-  val factory = new ClientDriverFactory()
-  var driver: ClientDriver = null
+  protected val factory = new ClientDriverFactory()
+  protected var driver: ClientDriver = null
 
   case class HttpEntity(content: String, contentType: String)
 
@@ -32,25 +32,22 @@ trait RestDriven extends Suite with BeforeAndAfterAll with BeforeAndAfterEach {
     driver.addExpectation(request, response)
   }
 
-  def request(method: Method, path: String, body: Option[HttpEntity] = None): ClientDriverRequest = {
-    val builder = onRequestTo(path).withMethod(method)
-    body match {
-      case Some(HttpEntity(b, c)) => builder.withBody(b, c); builder
-      case _ => builder
-    }
-  }
+  def request(method: Method, path: String): ClientDriverRequest =
+    RestClientDriver.onRequestTo(path).withMethod(method)
 
   def respondWith(status: Int, body: Option[HttpEntity] = None) = {
     body match {
-      case Some(HttpEntity(b, c)) => giveResponse(b, c).withStatus(status)
-      case _ => giveEmptyResponse().withStatus(status)
+      case Some(HttpEntity(b, c)) => RestClientDriver.giveResponse(b, c).withStatus(status)
+      case _ => RestClientDriver.giveEmptyResponse().withStatus(status)
     }
   }
 
   def entity(content: String, contentType: String) = Some(HttpEntity(content, contentType))
 
-  def get(path: String, body: Option[HttpEntity] = None) = request(Method.GET, path, body)
-  def put(path: String, body: Option[HttpEntity] = None) = request(Method.PUT, path, body)
-  def post(path: String, body: Option[HttpEntity] = None) = request(Method.POST, path, body)
-  def delete(path: String, body: Option[HttpEntity] = None) = request(Method.DELETE, path, body)
+  def onGetTo(path: String) = request(Method.GET, path)
+  def onPutTo(path: String) = request(Method.PUT, path)
+  def onPostTo(path: String) = request(Method.POST, path)
+  def onDeleteTo(path: String) = request(Method.DELETE, path)
+  def onRequestTo(method: String, path: String) =
+    request(Method.custom(method), path)
 }

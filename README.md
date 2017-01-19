@@ -9,6 +9,8 @@ Note that you can use the core Java rest-driver library directly from Scala just
 on both `rest-driver-scala`, `rest-driver` and `scalatest`. In your sbt build include:
 
 ```scala
+resolvers += Resolver.bintrayRepo("kelveden", "maven")
+
 libraryDependencies ++= Seq(
   "com.kelveden" % "rest-driver-scala" % "1.0.0" % "test",
   "com.github.rest-driver" % "rest-client-driver" % "2.0.0" % "test",

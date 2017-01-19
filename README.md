@@ -73,8 +73,8 @@ In particular, the `onXXXTo` (`onGetTo` et al) and `respondWith` functions retur
 can be manipulated in the usual way. So, for example:
 
 ```scala
-  expect(
-    onGetTo("/my/stubbed/service").withHeader("myheader1", "myvalue1"),
-    respondWith(200).withHeader("myheader2", "value2")
-  )
+expect(
+  onGetTo("/my/stubbed/service").withHeader("myheader1", "myvalue1"),
+  respondWith(200).withHeader("myheader2", "value2")
+)
 ```

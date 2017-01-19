@@ -1,6 +1,6 @@
 name := "rest-driver-scala"
 organization := "com.kelveden"
-version := "1.0.0-SNAPSHOT"
+version := "1.0.0"
 scalaVersion := "2.11.8"
 homepage := Some(url("https://github.com/kelveden"))
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))

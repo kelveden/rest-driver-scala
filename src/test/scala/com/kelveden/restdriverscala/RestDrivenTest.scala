@@ -39,6 +39,17 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
       response should haveStatus(666)
     }
 
+    it("can build a GET request with params") {
+      expect(
+        onGetTo("/my/url", params = Map("myparam" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = get(s"$baseUrl/my/url?myparam=myvalue")
+
+      response should haveStatus(666)
+    }
+
     it("can build a PUT request") {
       expect(onPutTo("/my/url"), respondWith(666))
 
@@ -65,6 +76,17 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
       )
 
       val response = put(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
+    }
+
+    it("can build a PUT request with params") {
+      expect(
+        onPutTo("/my/url", params = Map("myparam" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = put(s"$baseUrl/my/url?myparam=myvalue")
 
       response should haveStatus(666)
     }
@@ -99,6 +121,17 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
       response should haveStatus(666)
     }
 
+    it("can build a POST request with params") {
+      expect(
+        onPostTo("/my/url", params = Map("myparam" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = post(s"$baseUrl/my/url?myparam=myvalue")
+
+      response should haveStatus(666)
+    }
+
     it("can build a DELETE request") {
       expect(onDeleteTo("/my/url"), respondWith(666))
 
@@ -129,6 +162,17 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
       response should haveStatus(666)
     }
 
+    it("can build a DELETE request with params") {
+      expect(
+        onDeleteTo("/my/url", params = Map("myparam" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = delete(s"$baseUrl/my/url?myparam=myvalue")
+
+      response should haveStatus(666)
+    }
+
     it("can build a request with ad-hoc method") {
       expect(onRequestTo("OPTIONS", "/my/url"), respondWith(666))
 
@@ -155,6 +199,17 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
       )
 
       val response = get(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
+    }
+
+    it("can build an ad-hoc request with params") {
+      expect(
+        onRequestTo("GET", "/my/url", params = Map("myparam" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = get(s"$baseUrl/my/url?myparam=myvalue")
 
       response should haveStatus(666)
     }

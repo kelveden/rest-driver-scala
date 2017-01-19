@@ -11,6 +11,7 @@ trait RestDriven extends Suite with BeforeAndAfterAll with BeforeAndAfterEach {
   protected var driver: ClientDriver = null
   type HttpHeaders = Map[String, String]
   type HttpEntity = (String, String)
+  type HttpParams = Map[String, String]
   val EmptyEntity: HttpEntity = ("", "")
 
   override def beforeAll() = {
@@ -32,37 +33,51 @@ trait RestDriven extends Suite with BeforeAndAfterAll with BeforeAndAfterEach {
     driver.addExpectation(request, response)
   }
 
-  private def request(method: Method, path: String, entity: HttpEntity, headers: HttpHeaders): ClientDriverRequest = {
+  private def request(method: Method, path: String, entity: HttpEntity, headers: HttpHeaders, params: HttpParams): ClientDriverRequest = {
     val builder = RestClientDriver.onRequestTo(path).withMethod(method)
     entity match {
-      case EmptyEntity => builder
-      case (b, c) => builder.withBody(b, c); builder
+      case EmptyEntity => // Ignore
+      case (b, c) => builder.withBody(b, c)
     }
+
+    headers.foreach({
+      case (name, value) => builder.withHeader(name, value)
+    })
+
+    params.foreach({
+      case (name, value) => builder.withParam(name, value)
+    })
+
+    builder
   }
 
   def respondWith(status: Int, entity: HttpEntity = EmptyEntity, headers: Map[String, String] = Map.empty): ClientDriverResponse = {
-    val response = entity match {
+    val builder = entity match {
       case EmptyEntity => RestClientDriver.giveEmptyResponse().withStatus(status)
       case (b, c) => RestClientDriver.giveResponse(b, c).withStatus(status)
     }
 
     headers.foreach({
-      case (name, value) => response.withHeader(name, value)
+      case (name, value) => builder.withHeader(name, value)
     })
 
-    response
+    builder
   }
 
   def entity(content: String, contentType: String) = Some((content, contentType))
 
-  def onGetTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty) =
-    request(Method.GET, path, entity, headers)
-  def onPutTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty) =
-    request(Method.PUT, path, entity, headers)
-  def onPostTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty) =
-    request(Method.POST, path, entity, headers)
-  def onDeleteTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty) =
-    request(Method.DELETE, path, entity, headers)
-  def onRequestTo(method: String, path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty) =
-    request(Method.custom(method), path, entity, headers)
+  def onGetTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty, params: HttpParams = Map.empty) =
+    request(Method.GET, path, entity, headers, params)
+
+  def onPutTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty, params: HttpParams = Map.empty) =
+    request(Method.PUT, path, entity, headers, params)
+
+  def onPostTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty, params: HttpParams = Map.empty) =
+    request(Method.POST, path, entity, headers, params)
+
+  def onDeleteTo(path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty, params: HttpParams = Map.empty) =
+    request(Method.DELETE, path, entity, headers, params)
+
+  def onRequestTo(method: String, path: String, entity: HttpEntity = EmptyEntity, headers: HttpHeaders = Map.empty, params: HttpParams = Map.empty) =
+    request(Method.custom(method), path, entity, headers, params)
 }

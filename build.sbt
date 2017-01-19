@@ -1,7 +1,9 @@
 name := "rest-driver-scala"
 organization := "com.kelveden"
-version := "0.0.1-SNAPSHOT"
+version := "1.0.0-SNAPSHOT"
 scalaVersion := "2.11.8"
+licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
+bintrayPackageLabels := Seq("rest-driver", "testing", "acceptance")
 
 scalacOptions ++= Seq(
   "-deprecation",

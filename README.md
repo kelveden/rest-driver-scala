@@ -41,7 +41,7 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
 
 ```
 
-For more examples of usage, see the [unit tests](./test/scala/com/kelveden/restdriverscala/RestDrivenTest).
+For more examples of usage, see the [unit tests](./test/scala/com/kelveden/restdriverscala/RestDrivenTest.scala).
 
 ## Matchers
 A simple set of scalatest matchers are available to match against a rest-driver `Response` object.
@@ -55,7 +55,7 @@ haveHeader(name: String)
 haveHeader(name: String, value: String)
 ```
 
-See the [unit tests](./test/scala/com/kelveden/restdriverscala/RestDrivenMatchersTest) for examples of usage.
+See the [unit tests](./test/scala/com/kelveden/restdriverscala/RestDrivenMatchersTest.scala) for examples of usage.
 
 ## Logging
 rest-driver provides some useful logging at `INFO` level via [SLF4J](https://www.slf4j.org/).

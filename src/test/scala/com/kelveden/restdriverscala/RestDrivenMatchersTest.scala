@@ -10,7 +10,7 @@ class RestDrivenMatchersTest extends FunSpec with Matchers with RestDriven with 
 
   describe("haveBody matcher") {
     it("matches the raw string response body against a string content") {
-      expect(onGetTo("/my/url"), respondWith(666, entity("mycontent", "text/plain")))
+      expect(onGetTo("/my/url"), respondWith(666, entity = ("mycontent", "text/plain")))
 
       val response = get(s"$baseUrl/my/url")
 
@@ -18,7 +18,7 @@ class RestDrivenMatchersTest extends FunSpec with Matchers with RestDriven with 
     }
 
     it("does not match if the response body differs from the specified content") {
-      expect(onGetTo("/my/url"), respondWith(666, entity("bollox", "text/plain")))
+      expect(onGetTo("/my/url"), respondWith(666, entity = ("bollox", "text/plain")))
 
       val response = get(s"$baseUrl/my/url")
 
@@ -28,7 +28,7 @@ class RestDrivenMatchersTest extends FunSpec with Matchers with RestDriven with 
 
   describe("haveBodyThat matcher") {
     it("matches the raw string response body with a string matcher") {
-      expect(onGetTo("/my/url"), respondWith(666, entity("mycontent", "text/plain")))
+      expect(onGetTo("/my/url"), respondWith(666, entity = ("mycontent", "text/plain")))
 
       val response = get(s"$baseUrl/my/url")
 
@@ -36,7 +36,7 @@ class RestDrivenMatchersTest extends FunSpec with Matchers with RestDriven with 
     }
 
     it("does not match if the response body if the specified matcher does not return a match") {
-      expect(onGetTo("/my/url"), respondWith(666, entity("bollox", "text/plain")))
+      expect(onGetTo("/my/url"), respondWith(666, entity = ("bollox", "text/plain")))
 
       val response = get(s"$baseUrl/my/url")
 

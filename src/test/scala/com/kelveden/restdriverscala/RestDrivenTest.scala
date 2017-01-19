@@ -4,7 +4,7 @@ import org.scalatest.{FunSpec, Matchers}
 import com.github.restdriver.serverdriver.RestServerDriver._
 import PortFinder._
 
-class RestDrivenTest extends FunSpec with Matchers with RestDriven {
+class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDrivenMatchers {
   override val restDriverPort = getFreePort
   val baseUrl = s"http://localhost:$restDriverPort"
 
@@ -14,18 +14,29 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
 
       val response = get(s"$baseUrl/my/url")
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
     }
 
     it("can build a GET request with body") {
       expect(
-        onGetTo("/my/url", entity("mycontent", "text/plain")),
+        onGetTo("/my/url", entity = ("mycontent", "text/plain")),
         respondWith(666)
       )
 
       val response = get(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
+    }
+
+    it("can build a GET request with headers") {
+      expect(
+        onGetTo("/my/url", headers = Map("myheader" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = get(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
     }
 
     it("can build a PUT request") {
@@ -33,18 +44,29 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
 
       val response = put(s"$baseUrl/my/url")
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
     }
 
     it("can build a PUT request with body") {
       expect(
-        onPutTo("/my/url", entity("mycontent", "text/plain")),
+        onPutTo("/my/url", entity = ("mycontent", "text/plain")),
         respondWith(666)
       )
 
       val response = put(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
+    }
+
+    it("can build a PUT request with headers") {
+      expect(
+        onPutTo("/my/url", headers = Map("myheader" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = put(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
     }
 
     it("can build a POST request") {
@@ -52,18 +74,29 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
 
       val response = post(s"$baseUrl/my/url")
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
     }
 
     it("can build a POST request with body") {
       expect(
-        onPostTo("/my/url", entity("mycontent", "text/plain")),
+        onPostTo("/my/url", entity = ("mycontent", "text/plain")),
         respondWith(666)
       )
 
       val response = post(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
+    }
+
+    it("can build a POST request with headers") {
+      expect(
+        onPostTo("/my/url", headers = Map("myheader" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = post(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
     }
 
     it("can build a DELETE request") {
@@ -71,18 +104,29 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
 
       val response = delete(s"$baseUrl/my/url")
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
     }
 
     it("can build a DELETE request with body") {
       expect(
-        onDeleteTo("/my/url", entity("mycontent", "text/plain")),
+        onDeleteTo("/my/url", entity = ("mycontent", "text/plain")),
         respondWith(666)
       )
 
       val response = delete(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
+    }
+
+    it("can build a DELETE request with headers") {
+      expect(
+        onDeleteTo("/my/url", headers = Map("myheader" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = delete(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
     }
 
     it("can build a request with ad-hoc method") {
@@ -90,18 +134,29 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
 
       val response = options(s"$baseUrl/my/url")
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
     }
 
     it("can build an ad-hoc request with body") {
       expect(
-        onRequestTo("PUT", "/my/url", entity("mycontent", "text/plain")),
+        onRequestTo("PUT", "/my/url", entity = ("mycontent", "text/plain")),
         respondWith(666)
       )
 
       val response = put(s"$baseUrl/my/url", body("mycontent", "text/plain"))
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
+    }
+
+    it("can build an ad-hoc request with headers") {
+      expect(
+        onRequestTo("GET", "/my/url", headers = Map("myheader" -> "myvalue")),
+        respondWith(666)
+      )
+
+      val response = get(s"$baseUrl/my/url", header("myheader", "myvalue"))
+
+      response should haveStatus(666)
     }
   }
 
@@ -111,18 +166,29 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven {
 
       val response = get(s"$baseUrl/my/url")
 
-      response.getStatusCode should equal(666)
+      response should haveStatus(666)
     }
 
     it("can be used to specify the entity to respond with") {
       expect(
         onGetTo("/my/url"),
-        respondWith(666, entity("mycontent", "text/plain"))
+        respondWith(666, entity = ("mycontent", "text/plain"))
       )
 
       val response = get(s"$baseUrl/my/url")
 
-      response.getContent should equal("mycontent")
+      response should haveBodyContent("mycontent")
+    }
+
+    it("can be used to specify the headers to include in the response") {
+      expect(
+        onGetTo("/my/url"),
+        respondWith(666, headers = Map("myheader" -> "myvalue"))
+      )
+
+      val response = get(s"$baseUrl/my/url")
+
+      response should haveHeader("myheader", "myvalue")
     }
   }
 }

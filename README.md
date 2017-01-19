@@ -12,7 +12,7 @@ on both `rest-driver-scala`, `rest-driver` and `scalatest`. In your sbt build in
 resolvers += Resolver.bintrayRepo("kelveden", "maven")
 
 libraryDependencies ++= Seq(
-  "com.kelveden" % "rest-driver-scala" % "1.0.1" % "test",
+  "com.kelveden" %% "rest-driver-scala" % "1.0.1" % "test",
   "com.github.rest-driver" % "rest-client-driver" % "2.0.0" % "test",
   "com.github.rest-driver" % "rest-server-driver" % "2.0.0" % "test",
   "org.scalatest" %% "scalatest" % "3.0.1" % "test"

@@ -2,6 +2,7 @@ name := "rest-driver-scala"
 organization := "com.kelveden"
 version := "1.0.0-SNAPSHOT"
 scalaVersion := "2.11.8"
+homepage := Some(url("https://github.com/kelveden"))
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
 bintrayPackageLabels := Seq("rest-driver", "testing", "acceptance")
 
@@ -25,4 +26,15 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.1.7" % "test"
 )
 
-
+publishArtifact in Test := false
+pomExtra := (
+  <scm>
+    <url>git@github.com:kelveden/rest-driver-scala.git</url>
+    <connection>scm:git:git@github.com:kelveden/rest-driver-scala.git</connection>
+  </scm>
+    <developers>
+      <developer>
+        <id>kelveden</id>
+        <name>Alistair Dutton</name>
+      </developer>
+    </developers>)

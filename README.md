@@ -8,7 +8,7 @@ Note that you can use the core Java rest-driver library directly from Scala just
 `rest-driver-scala` does not bundle rest-driver or scalatest so you will need to depend
 on both `rest-driver-scala`, `rest-driver` and `scalatest`. In your sbt build include:
 
-```
+```scala
 libraryDependencies ++= Seq(
   "com.kelveden" % "rest-driver-scala" % "1.0.0" % "test",
   "com.github.rest-driver" % "rest-client-driver" % "2.0.0" % "test",
@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
 
 Now in your scalatest spec:
 
-```
+```scala
 import org.scalatest.{FunSpec, Matchers}
 import com.github.restdriver.serverdriver.RestServerDriver.
 
@@ -47,12 +47,12 @@ For more examples of usage, see the [unit tests](./test/scala/com/kelveden/restd
 A simple set of scalatest matchers are available to match against a rest-driver `Response` object.
 Just mix in the `RestDrivenMatchers` trait:
 
-```
-  haveBodyThat(bodyMatcher: Matcher[String])
-  haveBodyContent(content: String)
-  haveStatus(status: Int)
-  haveHeader(name: String)
-  haveHeader(name: String, value: String)
+```scala
+haveBodyThat(bodyMatcher: Matcher[String])
+haveBodyContent(content: String)
+haveStatus(status: Int)
+haveHeader(name: String)
+haveHeader(name: String, value: String)
 ```
 
 See the [unit tests](./test/scala/com/kelveden/restdriverscala/RestDrivenMatchersTest) for examples of usage.
@@ -72,7 +72,7 @@ In particular, the `onXXXTo` (`onGetTo` et al) and `respondWith` functions retur
 `ClientDriverRequest` and `ClientDriverResponse` object respectively that
 can be manipulated in the usual way. So, for example:
 
-```
+```scala
   expect(
     onGetTo("/my/stubbed/service").withHeader("myheader1", "myvalue1"),
     respondWith(200).withHeader("myheader2", "value2")

@@ -1,4 +1,6 @@
 # rest-driver-scala
+[![Build Status](https://travis-ci.org/kelveden/rest-driver-scala.png?branch=master)](https://travis-ci.org/kelveden/rest-driver-scala)
+
 Scala syntactic sugar and [ScalaTest](http://scalatest.org) matchers for [rest-driver](https://github.com/rest-driver/rest-driver).
 
 Note that you can use the core Java rest-driver library directly from Scala just fine - this

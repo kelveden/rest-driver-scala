@@ -45,7 +45,7 @@ class RestDrivenTest extends FunSpec with Matchers with RestDriven with RestDriv
 
 ```
 
-For more examples of usage, see the [unit tests](./src/test/scala/com/kelveden/restdriverscala/RestDrivenTest.scala).
+For more examples of usage see the [unit tests](./src/test/scala/com/kelveden/restdriverscala/RestDrivenTest.scala).
 
 ## Matchers
 A simple set of scalatest matchers are available to match against a rest-driver `Response` object.

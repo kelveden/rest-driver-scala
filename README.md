@@ -82,3 +82,11 @@ expect(
   respondWith(200).withHeader("myheader2", "value2")
 )
 ```
+
+## Publishing
+The module is published to [bintray](https://bintray.com).
+
+1. Bump the version number and push to git.
+2. `sbt +publish`
+
+(Run `sbt bintrayChangeCredentials` to setup bintray credentials if they are missing.)

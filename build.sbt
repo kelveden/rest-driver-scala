@@ -1,6 +1,6 @@
 name := "rest-driver-scala"
 organization := "com.kelveden"
-version := "1.0.1"
+version := "1.0.2"
 scalaVersion := "2.11.8"
 crossScalaVersions := Seq(scalaVersion.value, "2.12.4")
 homepage := Some(url("https://github.com/kelveden"))

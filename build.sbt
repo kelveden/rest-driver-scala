@@ -2,6 +2,7 @@ name := "rest-driver-scala"
 organization := "com.kelveden"
 version := "1.0.1"
 scalaVersion := "2.11.8"
+crossScalaVersions := Seq(scalaVersion.value, "2.12.4")
 homepage := Some(url("https://github.com/kelveden"))
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
 bintrayPackageLabels := Seq("rest-driver", "testing", "acceptance")
